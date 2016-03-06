@@ -1,0 +1,40 @@
+function! s:build()
+  let &makeprg='build'
+  silent make
+  botright copen
+  wincmd p
+endfunction
+
+command! Build call s:build()
+map <Leader>b :Build<cr>
+
+map <Leader>R :source $RESIZER_VIMRC<CR>
+
+function! s:load_url(url)
+    execute "silent !start explorer \"" . a:url . "\""
+endfunction
+
+function! s:lookup()
+    let s:url = "http://social.msdn.microsoft.com/Search/en-US/?Refinement=181&Query=" . expand("<cword>")
+    call s:load_url(s:url)
+endfunction
+
+command! Lookup call s:lookup()
+map <silent> <F1> :Lookup<CR>
+
+set switchbuf=useopen,split
+
+let NERDTreeShowHidden=0
+let NERDTreeDirArrows=1
+let g:ctrlp_open_new_file='v'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:10,max:10,results:10'
+
+if has("gui_running")
+    set guioptions-=m
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=R
+    set lines=60 columns=240
+endif
+set guifont=Andale_Mono:h11,Menlo:h11,Consolas:h11,Courier_New:h11
